@@ -1,0 +1,31 @@
+{
+  "name": "hapi-auth-siteminder",
+  "description": "Siteminder authentication plugin",
+  "version": "1.0.0",
+  "repository": "https://github.com/carbonrobot/hapi-auth-siteminder",
+  "main": "src/index.js",
+  "keywords": [
+    "hapi",
+    "plugin",
+    "auth",
+    "siteminder"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "boom": "3.x.x",
+    "hoek": "3.x.x"
+  },
+  "peerDependencies": {
+    "hapi": ">=10.x.x"
+  },
+  "devDependencies": {
+    "hapi": "^13.3.0",
+    "jasmine": "^2.4.1"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "license": "MIT"
+}
