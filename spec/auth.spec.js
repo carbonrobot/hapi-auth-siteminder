@@ -2,6 +2,8 @@ const Hapi = require('hapi');
 const siteminder = require('../');
 
 describe('hapi-auth-siteminder', () => {
+    
+    const required = ['HTTP_SM_USER', 'HTTP_SM_USERID'];
 
     beforeAll((done) => {
         this.server = new Hapi.Server();
@@ -9,12 +11,12 @@ describe('hapi-auth-siteminder', () => {
         
         const smAuth = {
             register: siteminder,
-            options: { headers: ['HTTP_SM_USER', 'HTTP_SM_USERID'] }
+            options: { required: required }
         };
         
         this.server.register([smAuth], (err) => {
             this.server.auth.strategy('default', 'siteminder', { validate: validate });
-            this.server.route({ method: 'GET', path: '/', config: { auth: 'default' }, handler: function(req,rep){ return 'ok';} });
+            this.server.route({ method: 'GET', path: '/', config: { auth: 'default' }, handler: function(request, reply){ return reply('ok');} });
             
             done();
         });
