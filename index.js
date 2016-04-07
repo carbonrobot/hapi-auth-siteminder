@@ -19,12 +19,14 @@ function authenticate(request, reply) {
 
     const req = request.raw.req;
     const headers = req.headers;
-    console.log(headers);
-    
+
     // check for required values
-    if (headers.length > 0) {
-        if (!Hoek.contain(headers, internals.required)) {
-            return reply(Boom.unauthorized(null, 'siteminder'));
+    if (internals.required.length > 0) {
+        const values = internals.required;
+        for (let i = 0; i < values.length; ++i) {
+            if (!headers.hasOwnProperty(values[i].toLowerCase())) {
+                return reply(Boom.unauthorized(null, 'siteminder'));
+            }
         }
     }
 
@@ -39,7 +41,7 @@ function authenticate(request, reply) {
         if (!credentials || typeof credentials !== 'object') {
             return reply(Boom.badImplementation('Bad credentials object received for Siteminder auth validation'));
         }
-        
+
         return reply.continue({ credentials: credentials });
     });
 }
@@ -62,7 +64,7 @@ function scheme(server, options) {
 /**
  * Register the plugin with the hapi ecosystem
  */
-exports.register = function (server, options, next) {
+exports.register = function(server, options, next) {
     internals.required = options.required || [];
 
     server.auth.scheme('siteminder', scheme);

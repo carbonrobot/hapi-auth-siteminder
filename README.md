@@ -26,9 +26,11 @@ function validate(request, headers, callback) {
     // additional processing such as gather information from the
     // database can occur here and be attached to the object
     
+    // note: hapijs headers are always lowercase property names
+    
     callback(err, { 
-        id: headers.HTTP_SM_USERID, 
-        username: headers.HTTP_SM_USER 
+        id: headers.http_sm_userid, 
+        username: headers.http_sm_user 
     });
 }
 ```
@@ -37,7 +39,7 @@ function validate(request, headers, callback) {
 
 Plugin takes the following options
 
-- required - (optional) The headers that your application requires. Use this to specify headers your application requires for later processing. If a required header is missing, the plugin will throw and authorization exception. Regardless of what headers are marked as required, the plugin will still send all avaiable headers to the validate function. (default: [])
+- required - (optional) The headers that your application requires. Use this to specify headers your application requires for later processing. If a required header is missing, the plugin will throw and authorization exception. Regardless of what headers are marked as required, the plugin will still send all avaiable headers to the validate function. Case insensitive. (default: [])
 
 ## Validation
 
